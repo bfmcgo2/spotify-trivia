@@ -1,65 +1,50 @@
-import Head from 'next/head'
+import Head from 'next/head';
+import { useEffect, useState, createContext } from 'react'
+import { Page, Col, Row, Loading, Input, Text, Button, useToasts } from "@geist-ui/react"
+import useSWR from 'swr';
+import { SpotifyAuth, Scopes } from 'react-spotify-auth';
+
+
+import useAuth from '../hooks/useAuth';
+
+import fetcher from '../lib/fetcher';
 import styles from '../styles/Home.module.css'
 
-export default function Home() {
+import UnAuth from '../components/UnAuth';
+import Auth from '../components/Auth';
+
+const AuthContext = createContext();
+
+const Home = ({ client_id }) => {
+  const { user, loading, spotifyAuthToken } = useAuth();
+  // console.log(spotifyAuthToken, user)
+  if(loading) return (
+    <Row style={{ padding: '10px 0', width: '50px' }}>
+        <Loading size="large" />
+    </Row>
+  )
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>Spotify Trivia</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+    <Page>
+      {user && spotifyAuthToken? 
+              (<Auth token = { spotifyAuthToken }/>) : 
+              (<UnAuth client_id = { client_id } />)} 
+    </Page>
     </div>
   )
 }
+
+export const getStaticProps = async() => {
+  const client_id = process.env.SPOTIFY_CLIENT_ID;
+  return {
+    props: {
+      client_id
+    },
+  }
+}
+
+export default Home;
