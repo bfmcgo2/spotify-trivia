@@ -1,5 +1,7 @@
 import { Card, Image, Text, Link } from "@geist-ui/react";
 
+import styles from '../../styles/SongCard.module.css'
+
 const SongCard = ({song}) => {
 	// console.log(song);
 
