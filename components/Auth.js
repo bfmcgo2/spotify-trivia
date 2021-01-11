@@ -28,10 +28,6 @@ const logout = () => {
 }
 
 const Auth = ({token}) => {
-
-  const { data, error } = useSWR('/api/new-music?access_token='+token, fetcher);
-  console.log(data);
-  if(!data) return <Button onClick={logout}>Logout</Button>
   return(
     <>
       {

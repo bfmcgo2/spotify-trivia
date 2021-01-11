@@ -15,7 +15,7 @@ import Auth from '../components/Auth';
 
 const AuthContext = createContext();
 
-const Home = ({ client_id }) => {
+const Home = () => {
   const { user, loading, spotifyAuthToken } = useAuth();
   // console.log(spotifyAuthToken, user)
   if(loading) return (
@@ -34,19 +34,11 @@ const Home = ({ client_id }) => {
     <Page>
       {user && spotifyAuthToken? 
               (<Auth token = { spotifyAuthToken }/>) : 
-              (<UnAuth client_id = { client_id } />)} 
+              (<UnAuth />)} 
     </Page>
     </div>
   )
 }
 
-export const getStaticProps = async() => {
-  const client_id = process.env.SPOTIFY_CLIENT_ID;
-  return {
-    props: {
-      client_id
-    },
-  }
-}
 
 export default Home;
