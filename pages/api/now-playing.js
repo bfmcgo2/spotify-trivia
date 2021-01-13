@@ -9,13 +9,14 @@ export default async (_, res) => {
   }
 
   const song = await response.json()
+  console.log(song)
   const acceptable_answers = [];
-  // console.log(song);
   const isPlaying = song.is_playing,
   image= song.item.album.images[0],
   uri= song.item.uri,
   artists= song.item.artists.map((artist) => artist.name),
-  title= song.item.name 
+  title= song.item.name,
+  id = song.item.id
 
   song.item.artists.map(ans => {
     let { name } = ans
@@ -34,11 +35,13 @@ export default async (_, res) => {
   );
 
   return res.status(200).json({
+    id,
     isPlaying,
     image,
     uri,
     artists,
     title,
+    isPlaying,
     acceptable_answers
   });
 };
