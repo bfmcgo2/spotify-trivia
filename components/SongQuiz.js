@@ -17,7 +17,7 @@ const SongQuiz = ({token}) => {
   const { input, setInput, answer, correct, setStartGame, start_game } = initSongQuiz();
   return(
       <div>
-        <Modal open={!start_game} >
+        <Modal open={!start_game} disableBackdropClick={true}>
           <Modal.Title>Scan QR Code to Start Game</Modal.Title>
           <Modal.Content>
             <QRCode value="google.com" fgColor = '#1DB954'/>

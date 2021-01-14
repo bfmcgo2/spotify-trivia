@@ -1,4 +1,4 @@
-import { getMyPlaylists } from '../../lib/spotify';
+import { getMyPlaylists } from '../../../lib/spotify';
 
 export default async (_, res, a) => {
   // console.log(_.query.access_token);

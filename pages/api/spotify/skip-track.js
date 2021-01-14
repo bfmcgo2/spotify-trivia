@@ -1,4 +1,4 @@
-import { skipTrack } from '../../lib/spotify';
+import { skipTrack } from '../../../lib/spotify';
 
 export default async (_, res) => {
   const access_token = _.query.access_token

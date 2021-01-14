@@ -1,0 +1,25 @@
+.Button_container {
+	display: flex;
+	justify-content: center;
+}
+
+.Button {
+	display: flex;
+	border: none;
+	padding: 8px 10px;
+	border-radius: 25px;
+	background-color: #1DB954;
+	color: #fff;
+	transition: .3s;
+	text-align: center;
+	font-family: 'Lato', sans-serif;
+	font-weight: 900;
+	font-size: 14px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+.Button:hover {
+	background-color: #1ed760;
+	color: #fff;
+}

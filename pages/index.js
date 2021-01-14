@@ -4,7 +4,6 @@ import { Page, Col, Row, Loading, Input, Text, Button, useToasts } from "@geist-
 import useSWR from 'swr';
 import { SpotifyAuth, Scopes } from 'react-spotify-auth';
 
-
 import useAuth from '../hooks/useAuth';
 
 import fetcher from '../lib/fetcher';
@@ -28,14 +27,16 @@ const Home = () => {
       <Head>
         <title>Spotify Trivia</title>
         <link rel="icon" href="/favicon.ico" />
-        <link rel="stylesheet" type="text/css" charset="UTF-8" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"/>
-        <link rel="stylesheet" type="text/css"href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;900&display=swap" rel="stylesheet" />
       </Head>
-    <Page>
+    <div className={styles.page_wrapper}>
       {user && spotifyAuthToken? 
               (<Auth token = { spotifyAuthToken }/>) : 
               (<UnAuth />)} 
-    </Page>
+
+      
+    </div>
     </div>
   )
 }

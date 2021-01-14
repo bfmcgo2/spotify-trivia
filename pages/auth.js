@@ -7,7 +7,7 @@ import { signInWithSpotify } from "../lib/firebase";
 
 const AuthPage = () => {
 	// <Auth token = { spotifyAuthToken }/>
-	const { spotifyAuthToken, user } = useAuth();
+	const { spotifyAuthToken } = useAuth();
 	
 	return (
 	<Page>		

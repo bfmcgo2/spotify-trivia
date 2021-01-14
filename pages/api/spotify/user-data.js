@@ -1,4 +1,4 @@
-import { getUserData } from '../../lib/spotify';
+import { getUserData } from '../../../lib/spotify';
 
 export default async (_, res) => {
   const access_token = _.query.access_token
