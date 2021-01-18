@@ -1,8 +1,6 @@
 import Head from 'next/head';
-import { useEffect, useState, createContext } from 'react'
+import { useEffect, useState, createContext, useContext } from 'react'
 import { Page, Col, Row, Loading, Input, Text, Button, useToasts } from "@geist-ui/react"
-import useSWR from 'swr';
-import { SpotifyAuth, Scopes } from 'react-spotify-auth';
 
 import useAuth from '../hooks/useAuth';
 
@@ -10,18 +8,20 @@ import fetcher from '../lib/fetcher';
 import styles from '../styles/Home.module.css'
 
 import UnAuth from '../components/UnAuth';
-import Auth from '../components/Auth';
 
-const AuthContext = createContext();
+import { User } from '../context/UserContext';
+
 
 const Home = () => {
+  const { state } = useContext(User);
   const { user, loading, spotifyAuthToken } = useAuth();
-  // console.log(spotifyAuthToken, user)
   if(loading) return (
     <Row style={{ padding: '10px 0', width: '50px' }}>
         <Loading size="large" />
     </Row>
   )
+
+
   return (
     <div className={styles.container}>
       <Head>
@@ -31,9 +31,7 @@ const Home = () => {
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;900&display=swap" rel="stylesheet" />
       </Head>
     <div className={styles.page_wrapper}>
-      {user && spotifyAuthToken? 
-              (<Auth token = { spotifyAuthToken }/>) : 
-              (<UnAuth />)} 
+      <UnAuth />
 
       
     </div>

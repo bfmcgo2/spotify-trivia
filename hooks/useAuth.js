@@ -10,6 +10,7 @@ const useAuth = () => {
 
 	useEffect(() => {
 	  return db.checkAuth(user => {
+	  	console.log(user);
 	    setLoading(false);
 	    setUser(user);
 	  });

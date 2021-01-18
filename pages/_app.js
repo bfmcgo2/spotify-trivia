@@ -13,9 +13,9 @@ const App = ({ Component, pageProps }) => {
 	  	<GeistProvider>
 	  		<GlobalStyles>
 	  			<UserProvider>
-		  	 	<CssBaseline />
-			 	<Component {...pageProps} />
-	  		</UserProvider>
+			  	 	<CssBaseline />
+				 	<Component {...pageProps} />
+		  		</UserProvider>
 	  		</GlobalStyles>
 	  		
 		</GeistProvider>

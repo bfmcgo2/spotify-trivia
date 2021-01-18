@@ -12,6 +12,7 @@
     "@geist-ui/react-icons": "^1.0.1",
     "firebase": "^8.2.1",
     "firebase-auth": "^0.1.2",
+    "genius-lyrics-api": "^3.0.5",
     "js-cookie": "^2.2.1",
     "next": "10.0.4",
     "qrcode.react": "^1.0.1",

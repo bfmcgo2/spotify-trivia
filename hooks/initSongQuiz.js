@@ -15,7 +15,7 @@ const initSongQuiz = () => {
 	const [correct, setCorrect] = useState(false);
 	const [isPlaying, setIsPlaying] = useState(false);
 
-	useSWR((isPlaying === false && start_game ? '/api/now-playing?access_token='+token : null), fetcher, 
+	useSWR((isPlaying === false && start_game ? '/api/spotify/now-playing?access_token='+token : null), fetcher, 
     { 
       onSuccess:(data, error)=>{
       	console.log(data)
@@ -32,7 +32,8 @@ const initSongQuiz = () => {
 
 	// watching input change
 	useEffect(()=> {
-		console.log(answer)
+		console.log(answer, isPlaying)
+
 	  if(answer) {
 	    checkAnswer()
 	  }

@@ -1,8 +1,3 @@
-.Button_container {
-	display: flex;
-	justify-content: center;
-}
-
 .Button {
 	display: flex;
 	border: none;
