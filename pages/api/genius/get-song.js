@@ -1,11 +1,11 @@
-import { getLyrics } from 'genius-lyrics-api';
+import { getLyrics, getSong } from 'genius-lyrics-api';
 
 export default async (_, res, a) => {
 	const apiKey = process.env.GENIUS_API_TOKEN;
 	const options = {
 		apiKey: process.env.GENIUS_API_TOKEN,
-		title: 'Blinding Lights',
-		artist: 'The Weeknd',
+		title: 'S.O.S',
+		artist: 'Abba',
 		optimizeQuery: true
 	};
 

@@ -42,7 +42,6 @@ const initSongQuiz = () => {
 	const nextTrack = () => {
 		skipTrack(token);
 		setIsPlaying(false);
-
 		setCorrect(false);
 		setInput('');
 	}

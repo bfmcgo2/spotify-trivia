@@ -14,10 +14,8 @@ import { signOutSpotify } from "../../lib/firebase";
 const LyricQuiz = () => {
 	const getUser = Cookies.get('userData');
 	
-	const { lyrics, setInput, input } = initLyricQuiz();
-	const matchInputToLyric = () => {
-		console.log(input)
-	}
+	const { lyrics, setInput, input, endQuiz, score } = initLyricQuiz();
+	
 
 
 	if(!getUser || !lyrics) return <div></div>
@@ -26,15 +24,35 @@ const LyricQuiz = () => {
 	
 	return (
 	<Page>	
-		<Input size="large" placeholder="Large Input" style={{
-			color:'white'
-		}} onChange={(e)=> {
-          setInput(e.target.value)
-        }}/>
+		<div>User: {userData.display_name}</div>
+		<div>Score: {score}/{lyrics.filter(lyric => !lyric.lyric=== false).length}</div>
+		<Input 
+			size="large" 
+			placeholder="Large Input" 
+			style={{
+				color:'white',
+				position: 'fixed',
+				backgroundColor: 'black',
+				top: 0
+			}} 
+			value = { input }
+			onChange={(e)=> {
+	          setInput(e.target.value)
+	        }} />
+	        <Button onClick={endQuiz}>End Quiz</Button>
 		{ lyrics.map((lyric, i) => {
-			if(lyric.lyric === false) return <br />
+			if(lyric.lyric === false) return <br key={i}/>
 			return (
-				<Text>{lyric.lyric}</Text>
+				<span style={{
+					borderBottom:'1px solid white',
+					margin: '0 2px',
+					textAlign: 'center'
+				}} key={i}>
+					<span style={{
+						opacity: (lyric.correct === true ? 1 : 0)
+					}}>{lyric.lyric} </span> 
+					
+				</span>
 			)
 		}) }
 	</Page>
