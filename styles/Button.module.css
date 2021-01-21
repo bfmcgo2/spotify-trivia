@@ -12,9 +12,22 @@
 	font-size: 14px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
+	text-align: center;
+	justify-content: center;
 }
 
 .Button:hover {
 	background-color: #1ed760;
 	color: #fff;
+}
+
+
+@media only screen and (max-width: 600px) {
+	.Button {
+		/*padding: 8px 7vw;*/
+		letter-spacing: 0px;
+		font-size: 18px;
+		border-radius: 5px;
+		box-shadow: 1px 2px 1px 1px #000000;
+	}
 }
