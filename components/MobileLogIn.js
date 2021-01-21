@@ -1,12 +1,9 @@
 import { Row, Col, Card, Spacer, useToasts, Button } from "@geist-ui/react";
-import getConfig from 'next/config'
-const { publicRuntimeConfig } = getConfig()
 
 import styles from '../styles/Join.module.css';
 
 const MobileLogIn = ({ room_code, guest, disable, setGuest }) => {
 	const tileColors = ['#FFD29A', '#7CD1F9', '#223441', '#ED5564', '#77ab59'];
-	console.log(publicRuntimeConfig);
 	return(
 		<div className={styles.Join__login}>
 			<div className={styles.Join__label}>
