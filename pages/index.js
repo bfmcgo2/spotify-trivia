@@ -28,13 +28,11 @@ const Home = () => {
         <title>Spotify Trivia</title>
         <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.gstatic.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;900&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;900&display=swap" rel="stylesheet" />
       </Head>
-    <div className={styles.page_wrapper}>
-      <UnAuth />
-
-      
-    </div>
+      <div className={styles.page_wrapper}>
+        <UnAuth />
+      </div>
     </div>
   )
 }

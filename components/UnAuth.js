@@ -24,7 +24,7 @@ const UnAuth = () => {
         <Spacer x={2}/>Sign In With Spotify <Spacer x={2}/> <LogIn />
       </Buttons>
       <Spacer y={1}/>
-      <Buttons type="login" action = { ()=> login(dispatch, '/dashboard') }>
+      <Buttons type="login" action = { ()=> login(dispatch, '/admin') }>
         <Spacer x={2}/>Admin <Spacer x={2}/> <LogIn />
       </Buttons>
     </div>
