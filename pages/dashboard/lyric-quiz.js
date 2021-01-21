@@ -17,14 +17,14 @@ const LyricQuiz = () => {
 	const { lyrics, setInput, input, endQuiz, score } = initLyricQuiz();
 	
 
+	// COME BACK TO THIS PLEASE
+	// if(!getUser || !lyrics) return <div></div>
+	// const userData = JSON.parse(getUser);
 
-	if(!getUser || !lyrics) return <div></div>
-	const userData = JSON.parse(getUser);
+	if(!lyrics) return <div></div>
 
-	
 	return (
 	<Page>	
-		<div>User: {userData.display_name}</div>
 		<div>Score: {score}/{lyrics.filter(lyric => !lyric.lyric=== false).length}</div>
 		<Input 
 			size="large" 
