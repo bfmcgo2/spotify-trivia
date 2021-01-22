@@ -1,47 +1,64 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Page, Modal, Collapse, Text } from "@geist-ui/react";
+import { Page, Modal, Collapse, Text, Checkbox, Spacer, Radio, Button } from "@geist-ui/react";
 import { PlusCircle } from '@geist-ui/react-icons'
 import useSWR, { SWRConfig } from 'swr';
 
-
+import initAdmin from '../../hooks/initAdmin';
 import fetcher from '../../lib/fetcher';
 
 import Cards from '../../components/shared/Cards';
 
-
-
 const Admin = ({live_games}) => {
 	const [modal, setModal] = useState(false)
+	const { user_challenges, radio, handler } = initAdmin();
+	const playlist = () => {
+		if(!user_challenges.playlist){
+			return <div></div>
+		}
+		let tracks = user_challenges.playlist.map((tracks, i)=> {
+			return(
+				<div key={i}>
+					<Radio value={i}>{tracks.title} by {tracks.artist}</Radio>
+					<Spacer y={.5} />
+				</div>
+			)
+		})
+
+		return tracks
+	}
 
 	const openModal = () => setModal(true);
-
+	if(!user_challenges.playlist)return <div></div>
 	return (
 		<Page>
 			<Modal open={modal} onClose={()=> setModal(false)}>
 				<Modal.Title>Create A Game</Modal.Title>
-				<Modal.Subtitle>Add a Challenge</Modal.Subtitle>
+				<Modal.Subtitle>Add Challenges</Modal.Subtitle>
 				<Modal.Content>
 					<Collapse.Group>
-					  <Collapse title="New Music Friday">
-					    <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-					      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
-					  </Collapse>
+						<Collapse title="New Music Friday">
+							<Text>Guess the artist from the most recent New Music Friday!</Text>
+							<Button type="success">Start Now</Button>
+					  	</Collapse>
 					  <Collapse title="Fill the Lyrics">
-					    <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-					      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
-					  </Collapse>
-					  <Collapse title="Name the Song">
-					    <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-					      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
+					  	<Radio.Group value={radio} onChange={handler}>
+					  		<Text>Fill out the lyrics to some of these classics!</Text>
+				    	{
+				    		user_challenges.playlist.map((tracks, i)=> {
+				    					return(
+				    						<div key={i}>
+				    							<Radio value={i}>{tracks.title} by {tracks.artist}</Radio>
+				    							<Spacer y={.5} />
+				    						</div>
+				    					)
+				    				})
+				    	}
+				    	{(radio === null ? <div></div> : <Button type="success">Start Now</Button>)}
+					    </Radio.Group>
 					  </Collapse>
 					</Collapse.Group>
 				</Modal.Content>
-				<Modal.Action passive onClick={() => setModal(false)}>Cancel</Modal.Action>
-				<Modal.Action>Submit</Modal.Action>
 			</Modal>
 			<Cards action = {openModal}>
 				<h2>Create Game</h2>

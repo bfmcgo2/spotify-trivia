@@ -21,7 +21,7 @@ const Dashboard = () => {
 	  Cookies.remove('userData');
 	  signOutSpotify();
 	}
-
+	console.log(getUser)
 	if(!getUser) return <div></div>
 	const userData = JSON.parse(getUser);
 	return (
