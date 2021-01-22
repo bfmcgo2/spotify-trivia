@@ -4,8 +4,8 @@ export default async (_, res, a) => {
 	const apiKey = process.env.GENIUS_API_TOKEN;
 	const options = {
 		apiKey: process.env.GENIUS_API_TOKEN,
-		title: 'Piano Man',
-		artist: 'Billy Joel',
+		title: 'End Of The World As We Know It',
+		artist: 'REM',
 		optimizeQuery: true
 	};
 
