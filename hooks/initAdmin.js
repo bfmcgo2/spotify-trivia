@@ -12,8 +12,11 @@ const initAdmin = () => {
 
 	const [get_data, setGetData] = useState(false);
 	const [user_challenges, setUserChallenges] = useState({});
-	const [radio, setRadio] = useState(null)
-	
+	const [radio, setRadio] = useState(null);
+	const [modal, setModal] = useState(false);
+	const openModal = () => setModal(true);
+	const user_data = Cookies.get('userData');
+
 	const handler = val => {
 	    setRadio(val)
 	    console.log(val)
@@ -43,7 +46,11 @@ const initAdmin = () => {
 	return { 
 		user_challenges,
 		radio,
-		handler
+		handler,
+		modal,
+		setModal,
+		openModal,
+		user_data
 	}
 }
 

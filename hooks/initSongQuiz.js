@@ -18,7 +18,6 @@ const initSongQuiz = () => {
 	useSWR((isPlaying === false && start_game ? '/api/spotify/now-playing?access_token='+token : null), fetcher, 
     { 
       onSuccess:(data, error)=>{
-      	console.log(data)
         if(data.isPlaying === true){
         	console.log(data, answer);
         	if(!answer || data.id !== answer.id) {

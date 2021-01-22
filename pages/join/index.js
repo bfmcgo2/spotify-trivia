@@ -1,5 +1,5 @@
 import { useEffect, useContext, useState } from 'react';
-import { Row, Col, Card, Spacer, useToasts, Button } from "@geist-ui/react";
+import { Row, Col, Card, useToasts, Button } from "@geist-ui/react";
 
 import MobileLogIn from '../../components/MobileLogIn';
 
@@ -25,9 +25,8 @@ const Join = () => {
 		}}>
 		{
 			(guest.entered_room ? 
-				<input type="text" 
-					maxLength = '12' 
-					placeholder="NAME" 
+				<input type="text"  
+					placeholder="Answers Here" 
 					className={styles.Join__input}
 					onChange={(e)=> {
 						console.log('hey')

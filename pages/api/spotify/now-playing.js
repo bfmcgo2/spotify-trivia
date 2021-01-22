@@ -9,7 +9,7 @@ export default async (_, res) => {
   }
 
   const song = await response.json()
-  console.log(song)
+  console.log('here it is>>>>>><><><>>', song)
   const acceptable_answers = [];
   const isPlaying = song.is_playing,
   image= song.item.album.images[0],

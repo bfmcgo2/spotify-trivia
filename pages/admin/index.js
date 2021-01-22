@@ -6,30 +6,26 @@ import useSWR, { SWRConfig } from 'swr';
 
 import initAdmin from '../../hooks/initAdmin';
 import fetcher from '../../lib/fetcher';
+import { createGame } from '../../lib/firebase';
 
 import Cards from '../../components/shared/Cards';
 
 const Admin = ({live_games}) => {
-	const [modal, setModal] = useState(false)
-	const { user_challenges, radio, handler } = initAdmin();
-	const playlist = () => {
-		if(!user_challenges.playlist){
-			return <div></div>
-		}
-		let tracks = user_challenges.playlist.map((tracks, i)=> {
-			return(
-				<div key={i}>
-					<Radio value={i}>{tracks.title} by {tracks.artist}</Radio>
-					<Spacer y={.5} />
-				</div>
-			)
-		})
+	const { user_challenges, radio, handler, modal, setModal, openModal, user_data } = initAdmin();
+	const user = (user_data ? JSON.parse(user_data): null);
+	console.log(user)
 
-		return tracks
+	const chooseGame = (game_type) => {
+		const data = {
+			...radio,
+			game_type,
+			uid: user.id
+		}
+		setModal(false);
+		createGame(data)
 	}
 
-	const openModal = () => setModal(true);
-	if(!user_challenges.playlist)return <div></div>
+	if(!user_challenges.playlist) return <div></div>
 	return (
 		<Page>
 			<Modal open={modal} onClose={()=> setModal(false)}>
@@ -46,15 +42,15 @@ const Admin = ({live_games}) => {
 					  		<Text>Fill out the lyrics to some of these classics!</Text>
 				    	{
 				    		user_challenges.playlist.map((tracks, i)=> {
-				    					return(
-				    						<div key={i}>
-				    							<Radio value={i}>{tracks.title} by {tracks.artist}</Radio>
-				    							<Spacer y={.5} />
-				    						</div>
-				    					)
-				    				})
+		    					return(
+		    						<div key={i}>
+		    							<Radio value={tracks}>{tracks.title} by {tracks.artist}</Radio>
+		    							<Spacer y={.5} />
+		    						</div>
+		    					)
+		    				})
 				    	}
-				    	{(radio === null ? <div></div> : <Button type="success">Start Now</Button>)}
+				    	{(radio === null ? <div></div> : <Button type="success" onClick={()=> chooseGame('lyrics')}>Start Now</Button>)}
 					    </Radio.Group>
 					  </Collapse>
 					</Collapse.Group>

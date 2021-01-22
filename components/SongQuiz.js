@@ -4,7 +4,6 @@ import Slider from "react-slick";
 import useSWR, { SWRConfig } from 'swr';
 import { Button, Row, Grid, Input, Spacer, Modal } from "@geist-ui/react";
 import  QRCode from 'qrcode.react';
-import Cookies from 'js-cookie'
 
 import initSongQuiz from '../hooks/initSongQuiz';
 import fetcher from '../lib/fetcher';
@@ -27,17 +26,25 @@ const SongQuiz = ({token}) => {
                   </Modal.Content>
                   <Modal.Action passive onClick={() => setStartGame(true)}>Start Game</Modal.Action>
                 </Modal>
-              }
+        }
         
-        <Button onClick={ async()=> {
+        <Button size="small" onClick={ async()=> {
           let getSong = await skipTrack(token);
-        }}>Next (dont press please)</Button>
+        }}>Next</Button>
         <Spacer y={1} />
 
         <SongCard song= {correct ? answer : null}/>
-        <Input size="large" value = {input} onChange={(e)=> {
-          setInput(e.target.value)
-        }} placeholder="Who Is The Artist?" width="100%" />
+        <Spacer y={.5} />
+        <Input size="large" 
+          value = {input} 
+          onChange={(e)=> {
+            setInput(e.target.value)
+          }} 
+          placeholder="Who Is The Artist?" 
+          width="100%" 
+          style = {{
+            color: 'white'
+          }}/>
       </div>
   )
 }

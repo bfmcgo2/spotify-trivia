@@ -8,17 +8,22 @@ const initLyricQuiz = () => {
   const [lyrics, setLyrics] = useState();
   const [input, setInput] = useState('');
   const [score, setScore] = useState(0);
+  const [songDetails, setSongDetails] = useState({});
 
   useSWR((init_lyrics === false ? '/api/genius/get-song': null), fetcher, 
     { 
       onSuccess:(data, error)=>{
+        console.log(data)
+        let { artist, title } = data;
+
+        setSongDetails({artist,title});
+
         const lyric_answers = []
         let lyrics = data.lyrics.replace(/[\(\[].*?[\)\]]/g, "");
         let formatted = lyrics
                           .replace(/(\r\n)+|\r+|\n+|\t+/g, ' . ')
                           .replace(/\s+/g, ' ').trim()
-                    // .replace(/\n|\r/g, ' ')
-        console.log(formatted);            
+                    // .replace(/\n|\r/g, ' ')            
                     // .replace(/[^\w\s]|_/g, '').trim();
         let arr = formatted.split(' ')//.replace('↵', '<br/>')
         
@@ -100,7 +105,8 @@ const initLyricQuiz = () => {
     setInput,
     input,
     endQuiz,
-    score
+    score,
+    songDetails
   }
 }
 
