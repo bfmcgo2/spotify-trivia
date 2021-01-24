@@ -22,7 +22,7 @@ const LyricQuiz = () => {
 	// COME BACK TO THIS PLEASE
 	// if(!getUser || !lyrics) return <div></div>
 	// const userData = JSON.parse(getUser);
-	console.log(lyrics)
+	// console.log(lyrics)
 	if(!lyrics) return <div></div>
 
 	return (

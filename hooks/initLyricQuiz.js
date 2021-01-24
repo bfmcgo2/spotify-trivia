@@ -2,15 +2,34 @@ import { useEffect, useState } from 'react';
 import useSWR, { SWRConfig } from 'swr';
 
 import fetcher from '../lib/fetcher';
+import { getGame } from '../lib/firebase';
 
 const initLyricQuiz = () => {
-  const [init_lyrics, getLyrics] = useState(false);
+  
   const [lyrics, setLyrics] = useState();
+  const [room_id, setRoomId] = useState('');
+  const [game_details, setGameDetails] = useState()
   const [input, setInput] = useState('');
   const [score, setScore] = useState(0);
   const [songDetails, setSongDetails] = useState({});
 
-  useSWR((init_lyrics === false ? '/api/genius/get-song': null), fetcher, 
+
+  useEffect(()=> {
+    const room_code = window.location.search.substr(1).split('&')[0].split("=")[1];
+    setRoomId(room_code);
+  },[]);
+
+  useEffect( async () => {
+    if(room_id) {
+      const game_data = await getGame(room_id);
+      console.log(game_data)
+      setGameDetails(game_data);
+    }
+  },[room_id])
+
+
+  const [init_lyrics, getLyrics] = useState(false);
+  useSWR((game_details && init_lyrics === false ? `/api/genius/get-song?artist=${game_details.artist}&title=${game_details.title}`: null), fetcher, 
     { 
       onSuccess:(data, error)=>{
         console.log(data)
@@ -23,9 +42,7 @@ const initLyricQuiz = () => {
         let formatted = lyrics
                           .replace(/(\r\n)+|\r+|\n+|\t+/g, ' . ')
                           .replace(/\s+/g, ' ').trim()
-                    // .replace(/\n|\r/g, ' ')            
-                    // .replace(/[^\w\s]|_/g, '').trim();
-        let arr = formatted.split(' ')//.replace('↵', '<br/>')
+        let arr = formatted.split(' ')
         
         arr.map(lyric => {
           // console.log(lyric)
@@ -106,7 +123,8 @@ const initLyricQuiz = () => {
     input,
     endQuiz,
     score,
-    songDetails
+    songDetails,
+    room_id
   }
 }
 

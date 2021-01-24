@@ -6,11 +6,12 @@ import useSWR, { SWRConfig } from 'swr';
 
 import initAdmin from '../../hooks/initAdmin';
 import fetcher from '../../lib/fetcher';
-import { createGame } from '../../lib/firebase';
+import { createGame, fetchGames } from '../../lib/firebase';
 
+import CurrentGames from '../../components/CurrentGames';
 import Cards from '../../components/shared/Cards';
 
-const Admin = ({live_games}) => {
+const Admin = () => {
 	const { user_challenges, radio, handler, modal, setModal, openModal, user_data } = initAdmin();
 	const user = (user_data ? JSON.parse(user_data): null);
 	console.log(user)
@@ -24,6 +25,7 @@ const Admin = ({live_games}) => {
 		setModal(false);
 		createGame(data)
 	}
+
 
 	if(!user_challenges.playlist) return <div></div>
 	return (
@@ -56,21 +58,9 @@ const Admin = ({live_games}) => {
 					</Collapse.Group>
 				</Modal.Content>
 			</Modal>
-			<Cards action = {openModal}>
-				<h2>Create Game</h2>
-				<PlusCircle color='white' size={36}/>
-			</Cards>
-			{
-				live_games ? live_games.map((game)=> {
-					return (
-						<Cards>
-							<h2>{game.title}</h2>
-							<span>{game.teams}</span>
-							<span>{game.id}</span>
-						</Cards>
-					)
-				}) : <div></div>
-			}
+			<CurrentGames openModal= { openModal }/>
+			
+			
 		</Page>
 	)
 }
