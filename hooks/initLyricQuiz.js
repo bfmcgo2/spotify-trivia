@@ -49,14 +49,18 @@ const initLyricQuiz = () => {
           .collection('users')
             .doc(user.id)
               .collection('answers')
-              .orderBy('timestamp','desc')
+              .orderBy('createdAt', 'desc')
               .limit(1)
               .onSnapshot(snapshot => {
                 snapshot.forEach((snp)=>{
-                  console.log(snp.data())
-                  // const format = input.replace(/[^\w\s]|_/g, '').toLowerCase();
-                  // const matched = getAllIndexes(lyrics, format);
-                  // updateAnswers(matched);
+                  const data = snp.data()
+                  if(data) {
+                    console.log(data, snp)
+                    const matched = getAllIndexes(lyrics, data.answer);
+                    // console.log(matched);
+                    updateAnswers(matched);
+                  }
+                  
                 });
         }, err => {
           console.log(`Encountered error: ${err}`);
@@ -149,7 +153,9 @@ const initLyricQuiz = () => {
   useEffect(()=> {
     const format = input.replace(/[^\w\s]|_/g, '').toLowerCase();
     if(lyrics) {
+      console.log(format)
       const matched = getAllIndexes(lyrics, format);
+      console.log(matched)
       updateAnswers(matched);
     } 
 
