@@ -22,7 +22,6 @@ const initLyricQuiz = () => {
   useEffect( async () => {
     if(room_id) {
       const game_data = await getGame(room_id);
-      console.log(game_data)
       setGameDetails(game_data);
     }
   },[room_id])
@@ -32,7 +31,6 @@ const initLyricQuiz = () => {
   useSWR((game_details && init_lyrics === false ? `/api/genius/get-song?artist=${game_details.artist}&title=${game_details.title}`: null), fetcher, 
     { 
       onSuccess:(data, error)=>{
-        console.log(data)
         let { artist, title } = data;
 
         setSongDetails({artist,title});
@@ -124,7 +122,8 @@ const initLyricQuiz = () => {
     endQuiz,
     score,
     songDetails,
-    room_id
+    room_id,
+    game_details
   }
 }
 

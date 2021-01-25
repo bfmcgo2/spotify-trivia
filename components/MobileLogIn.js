@@ -1,9 +1,24 @@
+import { useEffect, useState } from 'react';
+
 import { Row, Col, Card, Spacer, useToasts, Button } from "@geist-ui/react";
+import { addUsers } from '../lib/firebase';
 
 import styles from '../styles/Join.module.css';
 
 const MobileLogIn = ({ room_code, guest, disable, setGuest }) => {
 	const tileColors = ['#FFD29A', '#7CD1F9', '#223441', '#ED5564', '#77ab59'];
+	const [input, setInput] = useState('')
+	console.log(guest)
+	const submitHandler = () => {	
+		addUsers(room_code, {...guest, entered_room: true}, (i)=> {
+			setGuest({...guest, entered_room: true, id: i});
+		})
+	}
+
+	useEffect(() => {
+    	setGuest({...guest, name: input})
+	}, [input])
+
 	return(
 		<div className={styles.Join__login}>
 			<div className={styles.Join__label}>
@@ -15,9 +30,12 @@ const MobileLogIn = ({ room_code, guest, disable, setGuest }) => {
 				<input type="text" 
 						maxLength = '12' 
 						placeholder="NAME" 
+						value = {input}
 						className={styles.Join__input}
 						onChange={(e)=> {
-				          setGuest({...guest, name: e.target.value})
+							const val = e.target.value;
+							const format = val.toLowerCase();
+							setInput(format)
 				        }} />
 				<Spacer y={1} />
 				<Button size={'large'}
@@ -27,7 +45,7 @@ const MobileLogIn = ({ room_code, guest, disable, setGuest }) => {
 							textTransform: 'uppercase'
 						}}
 						disabled={disable}
-						onClick={()=> setGuest({...guest, entered_room: true})}>Enter Game</Button>
+						onClick={submitHandler}>Enter Game</Button>
 				
 			</div>
 			<div className={styles.Join__label}>
