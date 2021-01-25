@@ -8,7 +8,6 @@ import styles from '../styles/Join.module.css';
 const MobileLogIn = ({ room_code, guest, disable, setGuest }) => {
 	const tileColors = ['#FFD29A', '#7CD1F9', '#223441', '#ED5564', '#77ab59'];
 	const [input, setInput] = useState('')
-	console.log(guest)
 	const submitHandler = () => {	
 		addUsers(room_code, {...guest, entered_room: true}, (i)=> {
 			setGuest({...guest, entered_room: true, id: i});

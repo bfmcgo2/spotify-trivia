@@ -103,6 +103,7 @@ const initJoinGame = () => {
 	  if(ans[0] === undefined || ans[0] === '') {
 	  	return 
 	  } else {
+	  	console.log(ans[0])
 	  	return addAnswers(room_code, guest.id ,ans[0])
 	  }
 	}

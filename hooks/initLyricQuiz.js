@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useSWR, { SWRConfig } from 'swr';
 
 import fetcher from '../lib/fetcher';
-import { getGame } from '../lib/firebase';
+import { gameRef, getGame } from '../lib/firebase';
 
 const initLyricQuiz = () => {
   
@@ -12,6 +12,9 @@ const initLyricQuiz = () => {
   const [input, setInput] = useState('');
   const [score, setScore] = useState(0);
   const [songDetails, setSongDetails] = useState({});
+  const [current_users, setCurrentUsers] = useState([]);
+
+
 
 
   useEffect(()=> {
@@ -23,8 +26,46 @@ const initLyricQuiz = () => {
     if(room_id) {
       const game_data = await getGame(room_id);
       setGameDetails(game_data);
+      // console.log(game_data)
+      const userWatch = gameRef.doc(room_id).collection('users').onSnapshot(snapshot => {
+        let users = [];
+        snapshot.forEach((snp)=>{
+          console.log(snp)
+          let data = snp.data();
+          users.push({...data, id: snp.id})
+        });
+        setCurrentUsers(users);
+      }, err => {
+        console.log(`Encountered error: ${err}`);
+      });
+      console.log(current_users);
     }
-  },[room_id])
+  },[room_id]);
+
+  useEffect( async () => {
+    if(current_users) {
+      current_users.map((user,i) => {
+        const answerWatch = gameRef.doc(room_id)
+          .collection('users')
+            .doc(user.id)
+              .collection('answers')
+              .orderBy('timestamp','desc')
+              .limit(1)
+              .onSnapshot(snapshot => {
+                snapshot.forEach((snp)=>{
+                  console.log(snp.data())
+                  // const format = input.replace(/[^\w\s]|_/g, '').toLowerCase();
+                  // const matched = getAllIndexes(lyrics, format);
+                  // updateAnswers(matched);
+                });
+        }, err => {
+          console.log(`Encountered error: ${err}`);
+        });
+      })
+      
+      
+    }
+  },[current_users]);
 
 
   const [init_lyrics, getLyrics] = useState(false);
@@ -66,6 +107,9 @@ const initLyricQuiz = () => {
       }
     });
 
+
+  
+
   const getAllIndexes = (arr, val) => {
     let indexes = []
     let i;
@@ -82,10 +126,10 @@ const initLyricQuiz = () => {
         setInput('');
       }
       dupl[mat].correct = true;
+      
       setLyrics(dupl);
     })
     const tot_corr = dupl.filter((lyr) => lyr.correct === true);
-    console.log(tot_corr);
     setScore(tot_corr.length);
   }
   
@@ -107,7 +151,6 @@ const initLyricQuiz = () => {
     if(lyrics) {
       const matched = getAllIndexes(lyrics, format);
       updateAnswers(matched);
-      console.log(lyrics);
     } 
 
   },[input]);
@@ -123,7 +166,8 @@ const initLyricQuiz = () => {
     score,
     songDetails,
     room_id,
-    game_details
+    game_details,
+    current_users
   }
 }
 
