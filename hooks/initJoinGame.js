@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import useSWR, { SWRConfig } from 'swr';
 
 import fetcher from '../lib/fetcher';
-import { getGame, addAnswers } from '../lib/firebase';
+import { getGame, addAnswers, gameRef } from '../lib/firebase';
 import { skipTrack } from '../lib/spotify';
 
 const token = Cookies.get('spotifyAuthToken');
@@ -18,6 +18,7 @@ const initJoinGame = () => {
 	const [init_lyrics, setInitLyrics] = useState(false);
 	const [lyrics, setLyrics] = useState();
 	const [input, setInput] = useState('');
+	const [current_users ,setCurrentUsers] = useState([])
 
 	useEffect(()=>{
 		const code = window.location.search.substr(1).split('&')[0].split("=")[1];
@@ -34,9 +35,50 @@ const initJoinGame = () => {
 		if(room_code) {
 			let data = await getGame(room_code);
 			setGameDetails(data);
-			setInitLyrics(true)
+			setInitLyrics(true);
+
+			const userWatch = gameRef.doc(room_code).collection('users').onSnapshot(snapshot => {
+			  let users = [];
+			  snapshot.forEach((snp)=>{
+			    console.log(snp)
+			    let data = snp.data();
+			    users.push({...data, id: snp.id})
+			  });
+			  setCurrentUsers(users);
+			}, err => {
+			  console.log(`Encountered error: ${err}`);
+			});
 		}
 	},[room_code])
+
+	useEffect( async () => {
+	  if(current_users) {
+	    current_users.map((user,i) => {
+	      const answerWatch = gameRef.doc(room_code)
+	        .collection('users')
+	          .doc(user.id)
+	            .collection('answers')
+	            .orderBy('createdAt', 'desc')
+	            .limit(1)
+	            .onSnapshot(snapshot => {
+	              snapshot.forEach((snp)=>{
+	                const data = snp.data()
+	                if(data) {
+	                  console.log(data, snp)
+	                  const matched = getAllIndexes(lyrics, data.answer);
+	                  updateAnswers(matched);
+	                }
+	                
+	              });
+	      }, err => {
+	        console.log(`Encountered error: ${err}`);
+	      });
+	    })
+	    
+	    
+	  }
+	},[current_users]);
+
 
 	
 

@@ -19,6 +19,7 @@ const CurrentGames = ({ openModal }) => {
   return( 
     <div style={{
       display: 'flex',
+      flexWrap: 'wrap'
     }}>
       <Cards action = {openModal}>
         <h2>Create Game</h2>
