@@ -14,9 +14,6 @@ const initLyricQuiz = () => {
   const [songDetails, setSongDetails] = useState({});
   const [current_users, setCurrentUsers] = useState([]);
 
-
-
-
   useEffect(()=> {
     const room_code = window.location.search.substr(1).split('&')[0].split("=")[1];
     setRoomId(room_code);

@@ -36,16 +36,18 @@ const LyricQuiz = () => {
 				justifyContent:'center',
 				flexDirection: 'column'
 			}}>
-			<input type="text"  
-					placeholder="Post Lyrics here" 
-					className={styles.Join__input}
-					style={{
-						width: '300px'
-					}} 
-					value = {input}
-					onChange={(e)=> {
-			          setInput(e.target.value)
-			        }} />
+			{
+				// <input type="text"  
+				// 	placeholder="Post Lyrics here" 
+				// 	className={styles.Join__input}
+				// 	style={{
+				// 		width: '300px'
+				// 	}} 
+				// 	value = {input}
+				// 	onChange={(e)=> {
+			 //          setInput(e.target.value)
+			 //        }} />
+			    }
 			<Spacer y={.5} />
 	        <Button onClick={endQuiz}>End Quiz</Button>
 	        <Spacer y={.5} />
