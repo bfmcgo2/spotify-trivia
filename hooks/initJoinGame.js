@@ -27,7 +27,7 @@ const initJoinGame = () => {
 
 	useEffect(()=> {
 		if(guest.hasOwnProperty('name') && guest.hasOwnProperty('color')) setDisable(false);
-		console.log(guest)
+
 	}, [guest])
 	
 
@@ -40,7 +40,6 @@ const initJoinGame = () => {
 			const userWatch = gameRef.doc(room_code).collection('users').onSnapshot(snapshot => {
 			  let users = [];
 			  snapshot.forEach((snp)=>{
-			    console.log(snp)
 			    let data = snp.data();
 			    users.push({...data, id: snp.id})
 			  });
@@ -54,17 +53,18 @@ const initJoinGame = () => {
 	useEffect( async () => {
 	  if(current_users) {
 	    current_users.map((user,i) => {
-	      const answerWatch = gameRef.doc(room_code)
-	        .collection('users')
-	          .doc(user.id)
-	            .collection('answers')
+	    	const answersRef = gameRef.doc(room_code)
+	    		.collection('users')
+    			.doc(user.id)
+				.collection('answers')
+
+
+	      const answerWatch = answersRef
 	            .orderBy('createdAt', 'desc')
-	            .limit(1)
 	            .onSnapshot(snapshot => {
 	              snapshot.forEach((snp)=>{
 	                const data = snp.data()
-	                if(data) {
-	                  console.log(data, snp)
+	                if(data && lyrics) {
 	                  const matched = getAllIndexes(lyrics, data.answer);
 	                  updateAnswers(matched);
 	                }
@@ -99,7 +99,6 @@ const initJoinGame = () => {
           const answer = {}
 
           if(lyric.match(/^\./g)) {
-            console.log(lyric);
             answer.lyric = false;
             answer.formatted_answer = false
             return lyric_answers.push(answer);
@@ -112,7 +111,6 @@ const initJoinGame = () => {
           return lyric_answers.push(answer);
           
         })
-        console.log(lyric_answers)
         setInitLyrics(false)
         setLyrics(lyric_answers)
       }
@@ -122,20 +120,16 @@ const initJoinGame = () => {
 	const getAllIndexes = (arr, val) => {
 	  let indexes = []
 	  let i;
-	      for(i = 0; i < arr.length; i++)
-	          if (arr[i].formatted_answer === val)
-	              indexes.push(i);
-	      return indexes;
+      for(i = 0; i < arr.length; i++)
+          if (arr[i].formatted_answer === val)
+              indexes.push(i);
+      return indexes;
 	}
 
 	const updateAnswers = (mat) => {
 	  const dupl = [...lyrics];
 	  const ans = mat.map((mat)=> {
 	  	if(dupl[mat].correct === true) return;
-	    if(dupl[mat].correct === false) {
-			setInput('');
-
-	    }
 	    const answer = dupl[mat].formatted_answer
 	    dupl[mat].correct = true;
 	    setLyrics(dupl);
@@ -145,9 +139,9 @@ const initJoinGame = () => {
 	  if(ans[0] === undefined || ans[0] === '') {
 	  	return 
 	  } else {
-	  	console.log(ans[0])
 	  	return addAnswers(room_code, guest.id ,ans[0])
 	  }
+	  
 	}
 
 	
@@ -155,8 +149,17 @@ const initJoinGame = () => {
 	useEffect(()=> {
 	  const format = input.replace(/[^\w\s]|_/g, '').toLowerCase();
 	  if(lyrics) {
-	    const matched = getAllIndexes(lyrics, format);
-	    updateAnswers(matched);
+		const matched = getAllIndexes(lyrics, format);
+	    if(lyrics[matched[0]]) {
+	    	console.log(lyrics[matched[0]])
+	    	if(lyrics[matched[0]].correct === false) {
+	    		console.log('clear')
+	    		setInput('');
+	    	} else {
+	    		console.log('do nothing')
+	    	}
+	    }
+	    updateAnswers(matched)
 	  } 
 
 	},[input]);

@@ -46,8 +46,6 @@ const initLyricQuiz = () => {
           .collection('users')
             .doc(user.id)
               .collection('answers')
-              .orderBy('createdAt', 'desc')
-              .limit(1)
               .onSnapshot(snapshot => {
                 snapshot.forEach((snp)=>{
                   const data = snp.data()
