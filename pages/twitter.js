@@ -4,13 +4,17 @@ const Twitter = () => {
 	return (
 		<div>
 			<Head>
-				<meta name="twitter:card" content="summary" />
-				<meta name="twitter:site" content="@nytimesbits" />
-				<meta name="twitter:creator" content="@nickbilton" />
-				<meta name="twitter:player:stream" content="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
-				<meta property="og:url" content="http://bits.blogs.nytimes.com/2011/12/08/a-twitter-for-my-sister/" />
-				<meta property="og:title" content="A Twitter for My Sister" />
-				<meta property="og:description" content="In the early days, Twitter grew so quickly that it was almost impossible to add new features because engineers spent their time trying to keep the rocket ship from stalling." />
+				<meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+				<meta name="twitter:card" content="player" />
+				<meta name="twitter:site" content="@wakeyio" />
+				<meta name="twitter:title" content="Hemopure ~ Wakey Wakey #26" />
+				<meta name="twitter:description" content="Hemopure is an artificial blood (HBOC) that’s saving lives in South Africa. It’s shelf stable and 100% compatible with all blood types." />
+				<meta name="twitter:image" content="https://wakey.io/public/img/thumbs/26.png" />
+				<meta name="twitter:player" content="https://wakey.io/embed/26" />
+				<meta name="twitter:player:width" content="720" />
+				<meta name="twitter:player:height" content="720" />
+				<meta name="twitter:player:stream" content="https://wakey.io/public/vid/26.mp4" />
+				<meta name="twitter:player:stream:content_type" content="video/mp4" />
 
 			</Head>
 		</div>
