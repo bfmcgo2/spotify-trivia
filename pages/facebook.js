@@ -5,7 +5,6 @@ const Facebook = () => {
 		<div>
 			<Head>
 				<meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-
 				<meta property="og:url"                content="https://spotify-trivia.vercel.app/facebook" />
 				<meta property="og:type"               content="website" />
 				<meta property="og:title"              content="Fenty" />
