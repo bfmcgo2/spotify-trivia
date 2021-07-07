@@ -15,7 +15,7 @@ const Twitter = () => {
 			</Head>
 			<div style={{position: 'relative', display: 'block', maxWidth: '640px'}}>
 				<div style={{paddingTop: "56.25%"}}>
-					<iframe src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" allowfullscreen="" allow="encrypted-media" frameborder="0" style={{
+					<video style={{
 						position: "absolute",
 						top: "0px",
 						right:"0px",
@@ -23,7 +23,10 @@ const Twitter = () => {
 						left:"0px",
 						width: "100%",
 						height: "100%"
-					}}></iframe>
+					}}
+					width="100%" height="100%" controls autoplay>
+					  <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4"/>
+					</video>
 				</div>
 			</div>
 		</div>
