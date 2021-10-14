@@ -1,3 +1,4 @@
+const path = require('path');
 require('dotenv').config();
 
 const isProd = process.env.NODE_ENV === 'production'
@@ -27,6 +28,15 @@ function getBasePath() {
 module.exports = {
     publicRuntimeConfig: {
         basePath: getBasePath() ,
+    },
+    sassOptions: {
+        includePaths: [path.join(__dirname, 'styles')],
+        prependData: `@import "main.scss";`
+    },
+    exportPathMap: function() {
+      return {
+        '/': { page: '/' }
+      };
     },
     env: {
         apiKey: process.env.apiKey,

@@ -9,8 +9,7 @@ import { skipTrack } from '../lib/spotify';
 const token = Cookies.get('spotifyAuthToken');
 
 
-const initJoinGame = () => {
-	
+const initJoinGame = () => {	
 	const [room_code, setRoomCode] = useState('');
 	const [guest, setGuest] = useState({});
 	const [disable, setDisable] = useState(true);
@@ -88,6 +87,7 @@ const initJoinGame = () => {
         let { artist, title } = data;
 
         const lyric_answers = []
+
         let lyrics = data.lyrics.replace(/[\(\[].*?[\)\]]/g, "");
         let formatted = lyrics
                           .replace(/(\r\n)+|\r+|\n+|\t+/g, ' . ')
@@ -153,7 +153,6 @@ const initJoinGame = () => {
 	    if(lyrics[matched[0]]) {
 	    	console.log(lyrics[matched[0]])
 	    	if(lyrics[matched[0]].correct === false) {
-	    		console.log('clear')
 	    		setInput('');
 	    	} else {
 	    		console.log('do nothing')

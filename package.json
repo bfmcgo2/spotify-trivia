@@ -15,14 +15,16 @@
     "firebase-auth": "^0.1.2",
     "genius-lyrics-api": "^3.0.5",
     "js-cookie": "^2.2.1",
-    "next": "10.0.4",
+    "next": "^11.1.2",
     "qrcode.react": "^1.0.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-firebase-hooks": "^2.2.0",
+    "react-player": "^2.8.2",
     "react-slick": "^0.27.13",
     "react-spotify-api": "2.6.0",
     "react-spotify-auth": "^1.1.4",
+    "sass": "^1.42.1",
     "swr": "^0.3.11"
   }
 }

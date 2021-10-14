@@ -1,7 +1,7 @@
 import { getLyrics, getSong } from 'genius-lyrics-api';
 
 export default async (_, res, a) => {
-	console.log('hey hey hey hey ',_.query)
+
 	let {artist, title} = _.query
 	const apiKey = process.env.GENIUS_API_TOKEN;
 	const options = {

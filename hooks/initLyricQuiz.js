@@ -27,7 +27,6 @@ const initLyricQuiz = () => {
       const userWatch = gameRef.doc(room_id).collection('users').onSnapshot(snapshot => {
         let users = [];
         snapshot.forEach((snp)=>{
-          console.log(snp)
           let data = snp.data();
           users.push({...data, id: snp.id})
         });
@@ -52,8 +51,7 @@ const initLyricQuiz = () => {
                   if(data) {
                     console.log(data, snp)
                     const matched = getAllIndexes(lyrics, data.answer);
-                    // console.log(matched);
-                    updateAnswers(matched);
+                    updateAnswers(matched, user);
                   }
                   
                 });
@@ -112,28 +110,35 @@ const initLyricQuiz = () => {
   const getAllIndexes = (arr, val) => {
     let indexes = []
     let i;
-        for(i = 0; i < arr.length; i++)
-            if (arr[i].formatted_answer === val)
-                indexes.push(i);
-        return indexes;
+    if(arr) {
+      for(i = 0; i < arr.length; i++)
+      if (arr[i].formatted_answer === val)
+      indexes.push(i);
+    }
+    
+    return indexes;
   }
 
-  const updateAnswers = (mat) => {
-    const dupl = [...lyrics];
-    mat.map((mat)=> {
-      if(dupl[mat].correct === false) {
-        setInput('');
-      }
-      dupl[mat].correct = true;
-      
-      setLyrics(dupl);
-    })
-    const tot_corr = dupl.filter((lyr) => lyr.correct === true);
-    setScore(tot_corr.length);
+  const updateAnswers = (mat, user) => {
+    if(lyrics) {
+      const dupl = [...lyrics];
+      mat.map((mat)=> {
+        if(dupl[mat].correct === false) {
+          setInput('');
+        }
+        dupl[mat].correct = true;
+        dupl[mat].color = user.color;
+        dupl[mat].name = user.name;
+        
+        setLyrics(dupl);
+      })
+      const tot_corr = dupl.filter((lyr) => lyr.correct === true);
+      setScore(tot_corr.length);
+    }
+    
   }
   
   const endQuiz = () => {
-    console.log('hey')
     const dupl = [...lyrics];
     let end_quiz = dupl.map(({correct, ...lyric}) => {
       let update = {...lyric, correct : true}

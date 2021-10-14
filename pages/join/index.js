@@ -19,6 +19,7 @@ const Join = () => {
 					placeholder="Answers Here" 
 					className={styles.Join__input}
 					value={input}
+					autocomplete="false"
 					onChange={(e)=> {
 						setInput(e.target.value)
 					}} /> :
